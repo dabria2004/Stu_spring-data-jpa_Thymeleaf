@@ -10,7 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.validation.constraints.NotEmpty;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,20 +29,12 @@ public class Student {
     @Column(name = "student_id")
     private String studentid;
 
-    @NotEmpty
     @Column(name = "student_name")
     private String studentname;
 
-    @NotEmpty
     private String dob;
-
-    @NotEmpty
     private String gender;
-
-    @NotEmpty
     private String phone;
-
-    @NotEmpty
     private String education;
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -53,9 +44,18 @@ public class Student {
         inverseJoinColumns = @JoinColumn(name = "course_id"))
     private List<Course> attendCourses;
 
-    public void addCourse(Course course){
+    public void addCourses(Course course){
         if(attendCourses == null)
         attendCourses = new ArrayList<>();
         attendCourses.add(course);
+    }
+
+    public void addCourse(Course course)
+    {
+        this.attendCourses.add(course);
+    }
+
+    public void removeCourse( Course course) {
+        this.attendCourses.remove(course);
     }
 }

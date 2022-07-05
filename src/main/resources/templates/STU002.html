@@ -163,7 +163,7 @@
 									<span>Update</span>
 								</button>
 								<!--<a th:href="@{/deleteuser(id=${data.userid})}">-->
-							<a th:href="@{/deleteStudent(id=${sbean.studentid})}">
+							<a th:href="@{'/deleteStudent/'+${sbean.studentid}}">
 							<button type="button" class="btn btn-danger"
 								data-bs-toggle="modal" data-bs-target="#exampleModal">
 								<span>Delete</span>

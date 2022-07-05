@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -85,9 +86,10 @@ public class StudentController {
 	
 	@GetMapping("/studentdetail")
 	public ModelAndView seeMore(@RequestParam("id") String studentid, ModelMap model) {
+        Student student = studentRepository.findById(studentid).get();
         List<Course> courseList = courseRepository.findAll();
 		model.addAttribute("courseList", courseList);
-		return new ModelAndView ("STU002", "sbean", studentRepository.findById(studentid));
+		return new ModelAndView ("STU002", "sbean", student);
 	}
     @PostMapping("/updatestudent")
 	public String updateStudent(@ModelAttribute("sbean") @Validated Student sbean, BindingResult bs, ModelMap model) {
@@ -116,10 +118,12 @@ public class StudentController {
 		return "redirect:/setupstudentsearch";
 	}
 	
-	@GetMapping("/deleteStudent")
-	public String deleteStudent(@RequestParam("id") String studentid) {
+	
+	@GetMapping("/deleteStudent/{id}")
+	public String deleteStudent(@PathVariable("id") String studentid) {
         System.out.println(studentid);
-		studentRepository.deleteByStudentid(studentid);
+        //studentRepository.deleteCoursesByStudentId(studentid);
+		studentRepository.deleteStudentById(studentid);
 		return "redirect:/setupstudentsearch";
 	}
 }

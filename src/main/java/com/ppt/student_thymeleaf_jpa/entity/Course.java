@@ -3,7 +3,6 @@ package com.ppt.student_thymeleaf_jpa.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.validation.constraints.NotEmpty;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,7 +22,6 @@ public class Course {
     @Column(name = "class_id")
     private String classid;
 
-    @NotEmpty
     @Column(name = "class_name")
     private String classname;
 }

@@ -8,5 +8,6 @@ public class StudentThymeleafJpaApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(StudentThymeleafJpaApplication.class, args);
+
 	}
 }
