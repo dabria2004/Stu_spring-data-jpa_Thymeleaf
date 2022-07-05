@@ -126,4 +126,24 @@ public class StudentController {
 		studentRepository.deleteStudentById(studentid);
 		return "redirect:/setupstudentsearch";
 	}
+
+	@PostMapping("/searchstudent")
+	public String searchStudent(@RequestParam("id") String id, @RequestParam("name") String name,
+			@RequestParam("course") String course, ModelMap model) {
+		String sid = id.isBlank() ? "%$&*" : id;
+		String sname = name.isBlank() ? "%$&*" : name;
+		String scourse = course.isBlank() ? "%$&*" : course;
+		System.out.println( "sid => " + sid + " " + "sname => " + sname + " " + "scourse => " + scourse);
+		
+		if(id.isBlank() && name.isBlank() && course.isBlank()){
+			System.out.println("if condition");
+			return "redirect:/setupstudentsearch";
+		}else{
+			System.out.println("else condition");
+			List<Student> studentList = studentRepository.findDistinctByStudentidContainingOrStudentnameContainingOrAttendCourses_ClassnameContaining(sid, sname, scourse);
+			System.out.println("studentList => "+ studentList);
+			model.addAttribute("studentList", studentList);
+		return "STU003";
+		}		
+	}
 }

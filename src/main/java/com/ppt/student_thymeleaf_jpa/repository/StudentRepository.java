@@ -1,5 +1,7 @@
 package com.ppt.student_thymeleaf_jpa.repository;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,7 +26,7 @@ public interface StudentRepository extends JpaRepository<Student, String> {
     @Query(value = "delete from student_course sc where sc.student_id = ?1", nativeQuery = true)
     void deleteCoursesByStudentId(String id);
 
-    // List<Student> findDistinctByStudentidContainingOrStudentNameContainingOrAttendCourses_ClassnameContaining(String studentId, String studentName, String courseName);
+    List<Student>findDistinctByStudentidContainingOrStudentnameContainingOrAttendCourses_ClassnameContaining(String studentId, String studentName, String courseName);
 
     //public void deleteByStudentid(String studentId);
 }

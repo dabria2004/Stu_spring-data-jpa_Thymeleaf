@@ -89,7 +89,10 @@
             <td th:text="${data.studentid}" />
             <td th:text="${data.studentname}"/>
             <td>
-            <span th:each="cou: ${data.attendCourses}" th:text="${cou.classname}+','"></span>
+            <span th:each="cou: ${data.attendCourses}">
+            <span th:if="${couStat.index} > 0" th:text=" ',' "></span>
+            <span th:text="${cou.classname}"></span>
+            </span>
             </td>
             <td>
               <a th:href="@{/studentdetail(id=${data.studentid})}"><button type="button" class="btn btn-secondary mb-2">See More</button></a> 
