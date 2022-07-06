@@ -40,12 +40,15 @@ public class UserController {
 
     @RequestMapping(value="/adduser", method=RequestMethod.POST)
 	public String adduser(@ModelAttribute("user") @Validated User user,BindingResult bs, ModelMap model) {
-		// if(bs.hasErrors()) {
-		// 	return "USR001";
-		// }
+		if(bs.hasErrors()) {
+			return "USR001";
+		}
 		if(user.getUsername().isEmpty() || user.getEmail().isBlank() || user.getPassword().isBlank() || user.getConpassword().isBlank() || user.getRole().isBlank()) {
 			model.addAttribute("error", "You must fullfill the fields.");
 			return "USR001";
+				}else if(userRepository.existsByEmail(user.getEmail())){
+					model.addAttribute("email", "Email already exists!!");
+					return "USR001";
 				}
 		if(!user.getPassword().equals(user.getConpassword())) {
 			model.addAttribute("password", "Passwords do not match!!");
@@ -101,9 +104,12 @@ public class UserController {
 	
 	@RequestMapping(value="/updateuser", method=RequestMethod.POST)
 	public String updatebook(@ModelAttribute("user") @Validated User user,BindingResult bs, ModelMap model) {
-		// if(bs.hasErrors()) {
-		// 	return "USR002";
-		// }
+		User userId = userRepository.findById(user.getUserid()).get();
+		String userEmail = userId.getEmail();
+		String uemail = user.getEmail();
+		if(bs.hasErrors()) {
+			return "USR002";
+		}
 		if(user.getUsername().isBlank() || user.getEmail().isBlank() || user.getPassword().isBlank() || user.getConpassword().isBlank() || user.getRole().isBlank()) {
 			model.addAttribute("error", "You must fullfill the fields.");
 			return "USR002";
@@ -111,7 +117,11 @@ public class UserController {
 		else if(!user.getPassword().equals(user.getConpassword())) {
 			model.addAttribute("password", "Passwords do not match!!");
 			return "USR002";
-		}else {
+		}else if(userRepository.existsByEmail(user.getEmail()) && !userEmail.equals(uemail)){
+			model.addAttribute("error", "Email already exists!!");
+			return "USR002";
+		}
+		else {
 		    user = new User(user.getUserid(), user.getUsername(), user.getEmail(), user.getPassword(), user.getConpassword(), user.getRole());
 			userRepository.save(user);
             return "redirect:/setupusersearch";

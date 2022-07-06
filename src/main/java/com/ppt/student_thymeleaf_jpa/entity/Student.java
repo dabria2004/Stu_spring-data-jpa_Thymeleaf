@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotEmpty;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,13 +31,19 @@ public class Student {
     private String studentid;
 
     @Column(name = "student_name")
+    @NotEmpty(message = "Name cannot be blank.")
     private String studentname;
 
+    @NotEmpty(message = "Date of birth cannot be blank.")
     private String dob;
+    @NotEmpty(message = "Select your gender.")
     private String gender;
+    @NotEmpty(message = "Enter your phone number.")
     private String phone;
+    @NotEmpty(message = "Education cannot be blank.")
     private String education;
 
+    @NotEmpty(message = "Please select the course(s) you want to attend!!")
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
         name = "student_course", 

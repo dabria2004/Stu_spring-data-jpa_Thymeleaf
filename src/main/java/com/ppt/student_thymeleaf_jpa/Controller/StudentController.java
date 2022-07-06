@@ -60,10 +60,10 @@ public class StudentController {
 			String userId = String.format("STU%03d", tempId);
 			sbean.setStudentid(userId);
 		}
-        // if(bs.hasErrors()) {
-		// 	System.out.println("Taw 123123123123thar");
-		// 	return "STU001";
-		// }
+        if(bs.hasErrors()) {
+			System.out.println("Taw 123123123123thar");
+			return "STU001";
+		}
         if (sbean.getAttendCourses().size() == 0) {
             model.addAttribute("error", "You must fullfill the fields!!");
             model.addAttribute("data", sbean);
@@ -98,10 +98,10 @@ public class StudentController {
 		List<Course> courseList = courseRepository.findAll();
 		model.addAttribute("courseList", courseList);
 		
-		// if(bs.hasErrors()) {
-		// 	model.addAttribute("data", sbean);
-		// 	return "STU002";
-		// }
+		if(bs.hasErrors()) {
+			model.addAttribute("data", sbean);
+			return "STU002";
+		}
 		if (sbean.getAttendCourses().size() == 0) {
 			model.addAttribute("error", "Fill the blank !!");
 			model.addAttribute("data", sbean);
@@ -144,6 +144,6 @@ public class StudentController {
 			System.out.println("studentList => "+ studentList);
 			model.addAttribute("studentList", studentList);
 		return "STU003";
-		}		
+		}	
 	}
 }

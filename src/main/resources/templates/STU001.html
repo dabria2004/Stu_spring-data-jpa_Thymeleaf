@@ -73,7 +73,7 @@
 						<label for="name" class="col-md-2 col-form-label">Name</label>
 						<div class="col-md-4">
 							<input type="text" class="form-control" id="name" th:field="*{studentname}">
-							<!--<label th:if="${#fields.hasErrors('studentname')}" th:errors="*{studentname}" style="color: red;">Error</label>-->
+							<label th:if="${#fields.hasErrors('studentname')}" th:errors="*{studentname}" style="color: red;">Error</label>
 						</div>
 					</div>
 					<div class="row mb-4">
@@ -81,7 +81,7 @@
 						<label for="dob" class="col-md-2 col-form-label">DOB</label>
 						<div class="col-md-4">
 							<input type="date" class="form-control" id="dob" th:field="*{dob}">
-							<!--<label th:if="${#fields.hasErrors('dob')}" th:errors="*{dob}" style="color: red;">Error</label>-->
+							<label th:if="${#fields.hasErrors('dob')}" th:errors="*{dob}" style="color: red;">Error</label>
 						</div>
 					</div>
 					<fieldset class="row mb-4">
@@ -99,7 +99,7 @@
 									type="radio" name="gridRadios" id="gridRadios2" value="Female">
 								<label class="form-check-label" for="gridRadios2">Female</label>
 							</div>
-<!--<label th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}" style="color: red;">Error</label>-->
+<label th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}" style="color: red;">Error</label>
 						</div>
 					</fieldset>
 
@@ -108,7 +108,7 @@
 						<label for="phone" class="col-md-2 col-form-label">Phone</label>
 						<div class="col-md-4">
 							<input type="text" class="form-control" id="phone" th:field="*{phone}">
-							<!--<label th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" style="color: red;">Error</label>-->
+							<label th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" style="color: red;">Error</label>
 						</div>
 					</div>
 					<div class="row mb-4">
@@ -120,8 +120,8 @@
 								<option value="Diploma in IT">Diploma in IT</option>
 								<option value="Bachelor of Computer Science">Bachelor of Computer Science</option>
 							</select>
-							<!--<label th:if="${#fields.hasErrors('education')}" th:errors="*{education}" style="color: red;">Error</label>
-						</div>-->
+							<label th:if="${#fields.hasErrors('education')}" th:errors="*{education}" style="color: red;">Error</label>
+						</div>
 					</div>
 					<fieldset class="row mb-4">
 						<div class="col-md-2"></div>
@@ -134,7 +134,7 @@
 			<span th:text="${data.classname}"></span>
 			
 			</div>
-			<!--<label th:if="${#fields.hasErrors('attendCourses')}" th:errors="*{attendCourses}" style="color: red;">Error</label>-->
+			<label th:if="${#fields.hasErrors('attendCourses')}" th:errors="*{attendCourses}" style="color: red;">Error</label>
 						</div>
 					</fieldset>
 					

@@ -10,6 +10,7 @@ import com.ppt.student_thymeleaf_jpa.repository.UserRepository;
 
 @Service
 public class UserService {
+    
 @Autowired
 UserRepository userRepository;
 
