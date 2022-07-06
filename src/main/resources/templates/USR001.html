@@ -53,12 +53,18 @@
 
             <h2 class="col-md-6 offset-md-2 mb-5 mt-4">User Registration</h2>
             
-			<div style="color: green;"><h4 class = "col-md-6 offset-md-2 mb-5 mt-4 alert alert-success" 
+			<div style="color: green;">
+                <h4 class = "col-md-6 offset-md-2 mb-5 mt-4 alert alert-success" 
 					th:if="${success}" th:text="${success}"></h4>
-					</div>
-					<div style="color: green;"><h4 class = "col-md-6 offset-md-2 mb-5 mt-4 alert alert-success" 
+			</div>
+			<div style="color: green;">
+                <h4 class = "col-md-6 offset-md-2 mb-5 mt-4 alert alert-danger" 
 					th:if="${password}" th:text="${password}"></h4>
-					</div>
+			</div>
+            <div style="color: green;">
+                <h4 class = "col-md-6 offset-md-2 mb-5 mt-4 alert alert-danger" 
+					th:if="${error}" th:text="${error}"></h4>
+			</div>
             
             <div class="row mb-4">
                 <div class="col-md-2"></div>
