@@ -50,9 +50,8 @@ public class Student {
         attendCourses.add(course);
     }
 
-    public void addCourse(Course course)
-    {
-        this.attendCourses.add(course);
+    public void addCourse(Course course){
+       this.attendCourses.add(course);
     }
 
     public void removeCourse( Course course) {
