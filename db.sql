@@ -35,7 +35,7 @@ CREATE TABLE `course` (
 
 LOCK TABLES `course` WRITE;
 /*!40000 ALTER TABLE `course` DISABLE KEYS */;
-INSERT INTO `course` VALUES ('COU001','Java'),('COU002','PHP'),('COU003','Python'),('COU004','Java EE'),('COU005','C'),('COU006','ASP.Net');
+INSERT INTO `course` VALUES ('COU001','Java'),('COU002','PHP'),('COU003','Python'),('COU004','Java EE'),('COU005','C'),('COU006','ASP.Net'),('COU007','OJT');
 /*!40000 ALTER TABLE `course` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -63,7 +63,7 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES ('STU002','2022-07-18','Diploma in IT','Male','+95537568679','Jay jjjjj'),('STU003','2022-07-21','Diploma in IT','Female','+95123456789','Dabria'),('STU004','2022-07-19','Diploma in IT','Female','0987654321','Lin'),('STU005','2022-07-19','Bachelor of Information Technology','Female','657574354','test');
+INSERT INTO `student` VALUES ('STU002','2022-07-18','Diploma in IT','Male','34354787','Jay jjjjj'),('STU003','2022-07-21','Diploma in IT','Female','+95123456789','Dabria'),('STU004','2022-07-19','Diploma in IT','Female','0987654321','Lin'),('STU005','2022-07-19','Bachelor of Information Technology','Female','657574354','test');
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -90,7 +90,7 @@ CREATE TABLE `student_course` (
 
 LOCK TABLES `student_course` WRITE;
 /*!40000 ALTER TABLE `student_course` DISABLE KEYS */;
-INSERT INTO `student_course` VALUES ('STU003','COU002'),('STU004','COU003'),('STU004','COU005'),('STU005','COU003'),('STU005','COU005'),('STU002','COU001'),('STU002','COU006');
+INSERT INTO `student_course` VALUES ('STU003','COU002'),('STU004','COU003'),('STU004','COU005'),('STU005','COU003'),('STU005','COU005'),('STU002','COU005'),('STU002','COU006');
 /*!40000 ALTER TABLE `student_course` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -131,4 +131,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-07-06 13:24:29
+-- Dump completed on 2022-07-06 15:47:59
