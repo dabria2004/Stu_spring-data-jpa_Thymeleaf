@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,7 +39,7 @@ public class UserController {
 		return new ModelAndView("USR001","user",new User());
 	}
 
-    @RequestMapping(value="/adduser", method=RequestMethod.POST)
+    @PostMapping(value="/adduser")
 	public String adduser(@ModelAttribute("user") @Validated User user,BindingResult bs, ModelMap model) {
 		if(bs.hasErrors()) {
 			return "USR001";
@@ -74,7 +75,8 @@ public class UserController {
 		System.out.println("ShowAllUsers =>" + userlist.toString()); 
 		return "USR003";
 	}
-	@RequestMapping(value="/usersearch", method=RequestMethod.POST)
+
+	@PostMapping(value="/usersearch")
 	public String usersearch(@RequestParam("userid") String userid,@RequestParam("username") String username,ModelMap model) {
 		String id = userid.isBlank() ? "#&^@)" : userid;
 		String name = username.isBlank() ? "#&^@)" : username;
@@ -102,8 +104,9 @@ public class UserController {
 		return new ModelAndView("USR002","user", userRepository.findById(userid));
 	}
 	
-	@RequestMapping(value="/updateuser", method=RequestMethod.POST)
+	@PostMapping(value="/updateuser")
 	public String updatebook(@ModelAttribute("user") @Validated User user,BindingResult bs, ModelMap model) {
+		
 		User userId = userRepository.findById(user.getUserid()).get();
 		String userEmail = userId.getEmail();
 		String uemail = user.getEmail();

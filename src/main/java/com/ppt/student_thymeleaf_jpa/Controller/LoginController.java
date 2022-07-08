@@ -26,7 +26,7 @@ UserRepository userRepository;
 	return "MNU001";
 	}
 	
-	@GetMapping(value="/")
+	@GetMapping(value="/login")
 	public String login() {
 	return "LGN001";
 	}

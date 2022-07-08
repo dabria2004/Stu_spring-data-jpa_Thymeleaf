@@ -30,6 +30,7 @@ public class StudentController {
 
     @GetMapping(value = "/setupaddstudent")
 	public ModelAndView setupaddstudent(ModelMap model) {
+		
 		List<Course> courseList = courseRepository.findAll();
 		model.addAttribute("courseList", courseList);
 		return new ModelAndView ("STU001", "sbean", new Student());
@@ -37,6 +38,7 @@ public class StudentController {
 	
 	@GetMapping(value = "/setupaddstudentagain")
 	public ModelAndView setupaddstudentagain(ModelMap model) {
+		
 		List<Course> courseList = courseRepository.findAll();
 		model.addAttribute("courseList", courseList);
 		model.addAttribute("success", "Successfully Registered!!");
@@ -79,6 +81,7 @@ public class StudentController {
 
     @GetMapping("/setupstudentsearch")
 	public String studentManagement(ModelMap model) {	
+		
 		List<Student> studentList = studentRepository.findAll();
 		model.addAttribute("studentList", studentList);
 		return "STU003";
@@ -86,6 +89,7 @@ public class StudentController {
 	
 	@GetMapping("/studentdetail")
 	public ModelAndView seeMore(@RequestParam("id") String studentid, ModelMap model) {
+		
         Student student = studentRepository.findById(studentid).get();
         List<Course> courseList = courseRepository.findAll();
 		model.addAttribute("courseList", courseList);
@@ -93,6 +97,7 @@ public class StudentController {
 	}
     @PostMapping("/updatestudent")
 	public String updateStudent(@ModelAttribute("sbean") @Validated Student sbean, BindingResult bs, ModelMap model) {
+		
 		//String studentid = sbean.getStudentid();
 		System.out.println("sbean => " + sbean);
 		List<Course> courseList = courseRepository.findAll();
@@ -121,6 +126,7 @@ public class StudentController {
 	
 	@GetMapping("/deleteStudent/{id}")
 	public String deleteStudent(@PathVariable("id") String studentid) {
+		
         System.out.println(studentid);
         //studentRepository.deleteCoursesByStudentId(studentid);
 		studentRepository.deleteStudentById(studentid);
@@ -130,6 +136,7 @@ public class StudentController {
 	@PostMapping("/searchstudent")
 	public String searchStudent(@RequestParam("id") String id, @RequestParam("name") String name,
 			@RequestParam("course") String course, ModelMap model) {
+				
 		String sid = id.isBlank() ? "%$&*" : id;
 		String sname = name.isBlank() ? "%$&*" : name;
 		String scourse = course.isBlank() ? "%$&*" : course;

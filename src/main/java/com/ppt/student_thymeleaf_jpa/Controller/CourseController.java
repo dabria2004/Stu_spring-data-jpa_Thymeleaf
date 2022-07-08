@@ -17,12 +17,13 @@ import com.ppt.student_thymeleaf_jpa.repository.CourseRepository;
 
 @Controller
 public class CourseController {
-    
+
     @Autowired
     CourseRepository courseRepository;
 
     @GetMapping(value = "/setupaddclass")
 	public ModelAndView setupaddclass(ModelMap model, Course cbean) {
+		
         List<Course> courseList = courseRepository.findAll();
 		if (courseList.size() == 0) {
 			cbean.setClassid("COU001");
@@ -36,6 +37,7 @@ public class CourseController {
 	
 	@GetMapping(value = "/setupaddclassagain")
 	public ModelAndView setupaddclassagain(ModelMap model) {
+		
 		Course cbean = new Course();
 		List<Course> courseList = courseRepository.findAll();
 		if (courseList.size() == 0) {
@@ -51,6 +53,7 @@ public class CourseController {
 	
 	@PostMapping(value = "/addclass")
 	public String addclass(@ModelAttribute("cbean") @Validated Course cbean, BindingResult bs, ModelMap model) {
+		
 		if(bs.hasErrors()) {
 			return "BUD003";
 		}
