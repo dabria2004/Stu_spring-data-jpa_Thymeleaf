@@ -3,7 +3,6 @@ package com.ppt.student_thymeleaf_jpa;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -76,7 +75,7 @@ public class UserControllerTest {
 
     @Test
     public void testSetupUserUpdate() throws Exception {
-        this.mockMvc.perform(post("/setupUpdateUser").param("userid", "USR005"))
+        this.mockMvc.perform(get("/setupUpdateUser").param("userid", "USR005"))
 		.andExpect(status().isOk())
 		.andExpect(view().name("USR003"))
 		.andExpect(model().attributeExists("searchInfo"));
