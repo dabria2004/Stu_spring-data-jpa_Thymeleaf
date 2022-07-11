@@ -10,12 +10,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ppt.student_thymeleaf_jpa.Service.UserService;
 import com.ppt.student_thymeleaf_jpa.entity.User;
 import com.ppt.student_thymeleaf_jpa.repository.UserRepository;
 
@@ -25,8 +22,6 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
-	@Autowired
-	UserService userService;
 
     @GetMapping(value="/setupadduser")
 	public ModelAndView setupadduser() {
@@ -42,15 +37,13 @@ public class UserController {
     @PostMapping(value="/adduser")
 	public String adduser(@ModelAttribute("user") @Validated User user,BindingResult bs, ModelMap model) {
 		if(bs.hasErrors()) {
-			return "USR001";
-		}
-		if(user.getUsername().isEmpty() || user.getEmail().isBlank() || user.getPassword().isBlank() || user.getConpassword().isBlank() || user.getRole().isBlank()) {
 			model.addAttribute("error", "You must fullfill the fields.");
 			return "USR001";
-				}else if(userRepository.existsByEmail(user.getEmail())){
-					model.addAttribute("email", "Email already exists!!");
-					return "USR001";
-				}
+		}
+		if(userRepository.existsByEmail(user.getEmail())){
+			model.addAttribute("email", "Email already exists!!");
+			return "USR001";
+			}
 		if(!user.getPassword().equals(user.getConpassword())) {
 			model.addAttribute("password", "Passwords do not match!!");
 			return "USR001";
@@ -89,35 +82,22 @@ public class UserController {
 		return "USR003";
 	}
 
-	// String id = searchId.isBlank() ? ")#<>(}" : searchId;
-    //     String name = searchName.isBlank() ? ")#<>(}" : searchName;
-    //     List<User> searchUserList = null;
-    //     searchUserList = userService.selectUserListByIdOrName(id, name);
-    //     if (searchUserList.size() == 0) {
-    //         searchUserList = userService.selectAllUsers();
-    //     }
-    //     model.addAttribute("userList", searchUserList);
-    //     return "USR003";
-
     @GetMapping(value="/setupUpdateUser")
 	public ModelAndView setupUpdateUser(@RequestParam("id") String userid) {
 		return new ModelAndView("USR002","user", userRepository.findById(userid));
 	}
 	
 	@PostMapping(value="/updateuser")
-	public String updatebook(@ModelAttribute("user") @Validated User user,BindingResult bs, ModelMap model) {
+	public String updateuser(@ModelAttribute("user") @Validated User user,BindingResult bs, ModelMap model) {
 		
-		User userId = userRepository.findById(user.getUserid()).get();
+		User userId = userRepository.findByUserid(user.getUserid());
 		String userEmail = userId.getEmail();
 		String uemail = user.getEmail();
 		if(bs.hasErrors()) {
-			return "USR002";
-		}
-		if(user.getUsername().isBlank() || user.getEmail().isBlank() || user.getPassword().isBlank() || user.getConpassword().isBlank() || user.getRole().isBlank()) {
 			model.addAttribute("error", "You must fullfill the fields.");
 			return "USR002";
-				}
-		else if(!user.getPassword().equals(user.getConpassword())) {
+		}
+		if(!user.getPassword().equals(user.getConpassword())) {
 			model.addAttribute("password", "Passwords do not match!!");
 			return "USR002";
 		}else if(userRepository.existsByEmail(user.getEmail()) && !userEmail.equals(uemail)){
@@ -132,7 +112,7 @@ public class UserController {
 	}
 	
 	@GetMapping(value="/deleteuser")
-	public String deleteuser(@RequestParam("id") String userid,ModelMap model) {
+	public String deleteuser(@RequestParam("id") String userid) {
 		userRepository.deleteById(userid);
 		return "redirect:/setupusersearch";
 	}

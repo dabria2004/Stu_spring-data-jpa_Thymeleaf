@@ -8,6 +8,6 @@ import com.ppt.student_thymeleaf_jpa.entity.Course;
 @Repository
 public interface CourseRepository extends JpaRepository<Course, String> {
     public boolean existsByClassname(String className);
+    //Boolean selectExistsClassname(String className);
 
-    //public void deleteStudentByStudentid(String studentid);
 }

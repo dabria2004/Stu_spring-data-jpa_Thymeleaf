@@ -1,6 +1,5 @@
 package com.ppt.student_thymeleaf_jpa.entity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -51,17 +50,4 @@ public class Student {
         inverseJoinColumns = @JoinColumn(name = "course_id"))
     private List<Course> attendCourses;
 
-    public void addCourses(Course course){
-        if(attendCourses == null)
-        attendCourses = new ArrayList<>();
-        attendCourses.add(course);
-    }
-
-    public void addCourse(Course course){
-       this.attendCourses.add(course);
-    }
-
-    public void removeCourse( Course course) {
-        this.attendCourses.remove(course);
-    }
 }

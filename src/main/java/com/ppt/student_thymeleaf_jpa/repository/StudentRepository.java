@@ -14,19 +14,13 @@ import com.ppt.student_thymeleaf_jpa.entity.Student;
 @Repository
 public interface StudentRepository extends JpaRepository<Student, String> {
 
-    // public void deleteStudentByStudentid(String studentid);
-    // public void deleteByStudentid(String studentid);
+    List<Student> findByStudentid(String studentId);
 
     @Modifying
     @Transactional
     @Query(value = "delete from student s where s.student_id = ?1", nativeQuery = true)
     void deleteStudentById(String id);
 
-    @Modifying
-    @Query(value = "delete from student_course sc where sc.student_id = ?1", nativeQuery = true)
-    void deleteCoursesByStudentId(String id);
-
     List<Student>findDistinctByStudentidContainingOrStudentnameContainingOrAttendCourses_ClassnameContaining(String studentId, String studentName, String courseName);
 
-    //public void deleteByStudentid(String studentId);
 }

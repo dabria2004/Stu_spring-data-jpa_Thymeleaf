@@ -162,8 +162,11 @@
 							<button type="submit" class="btn btn-secondary">
 									<span>Update</span>
 								</button>
-								<!--<a th:href="@{/deleteuser(id=${data.userid})}">-->
-							<a th:href="@{'/deleteStudent/'+${sbean.studentid}}">
+								<!--<td><a th:href="@{/deleteuser(id=${data.userid})}">
+									th:href="@{/deleteStudent/+${sbean.studentid}}"-->
+									
+			<a th:each="stuId: ${data}"
+			th:href="@{/deleteStudent/(id=${stuId.studentid})}">
 							<button type="button" class="btn btn-danger"
 								data-bs-toggle="modal" data-bs-target="#exampleModal">
 								<span>Delete</span>

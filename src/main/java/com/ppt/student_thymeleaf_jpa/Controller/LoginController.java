@@ -22,7 +22,7 @@ public class LoginController {
 UserRepository userRepository;
 
     @GetMapping(value="/menu")
-	public String menu(ModelMap model) {
+	public String menu() {
 	return "MNU001";
 	}
 	

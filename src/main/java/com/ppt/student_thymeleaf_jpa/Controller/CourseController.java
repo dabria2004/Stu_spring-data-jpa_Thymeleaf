@@ -53,20 +53,17 @@ public class CourseController {
 	
 	@PostMapping(value = "/addclass")
 	public String addclass(@ModelAttribute("cbean") @Validated Course cbean, BindingResult bs, ModelMap model) {
-		
 		if(bs.hasErrors()) {
-			return "BUD003";
-		}
-		if (cbean.getClassid().equals("") || cbean.getClassname().equals("")) {
 			model.addAttribute("error", "You must fullfill the fields!!");
 			return "BUD003";
-		}else if(courseRepository.existsByClassname(cbean.getClassname())){
+		}
+		if(courseRepository.existsByClassname(cbean.getClassname())){
             model.addAttribute("classname", "Class name already exists.");
             return "BUD003";
         }
          else {
 			courseRepository.save(cbean);
-				return "redirect:/setupaddclassagain";
+			return "redirect:/setupaddclassagain";
 		}
 	}
 }
