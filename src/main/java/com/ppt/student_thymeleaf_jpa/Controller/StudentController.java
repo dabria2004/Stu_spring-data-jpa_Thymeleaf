@@ -1,6 +1,5 @@
 package com.ppt.student_thymeleaf_jpa.Controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;

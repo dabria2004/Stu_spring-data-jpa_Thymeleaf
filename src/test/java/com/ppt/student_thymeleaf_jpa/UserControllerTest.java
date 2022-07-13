@@ -6,12 +6,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.ppt.student_thymeleaf_jpa.repository.UserRepository;
@@ -24,12 +26,28 @@ public class UserControllerTest {
     @Autowired
 	private MockMvc mockMvc;
 	
+	@Autowired
+	MockHttpSession mockHttpSession;
+	
 	@MockBean
 	UserRepository userRepository;
 
+	@BeforeEach
+	public void LoginSession() throws Exception{
+		User user = User.builder()
+		.userid("USR012")
+        .username("Junit test")
+        .email("unittest@gmail.com")
+        .password("unit")
+        .conpassword("unit")
+        .role("User")
+		.build();
+		mockHttpSession.setAttribute("userInfo", user);
+	}
+
     @Test
 	public void testsetupadduser() throws Exception {
-		this.mockMvc.perform(get("/setupadduser"))
+		this.mockMvc.perform(get("/setupadduser").session(mockHttpSession))
 		.andExpect(status().isOk())
 		.andExpect(view().name("USR001"))
 		.andExpect(model().attributeExists("user"));
@@ -37,7 +55,7 @@ public class UserControllerTest {
 
 	@Test
 	public void testsetupadduseragain() throws Exception {
-		this.mockMvc.perform(get("/setupadduseragain"))
+		this.mockMvc.perform(get("/setupadduseragain").session(mockHttpSession))
 		.andExpect(status().isOk())
 		.andExpect(view().name("USR001"))
 		.andExpect(model().attributeExists("success"))
@@ -46,7 +64,7 @@ public class UserControllerTest {
 
     @Test
 	public void testAddUserValidate() throws Exception {
-		this.mockMvc.perform(post("/adduser"))
+		this.mockMvc.perform(post("/adduser").session(mockHttpSession))
 		.andExpect(status().isOk())
 		.andExpect(view().name("USR001"))
 		.andExpect(model().attributeExists("error"));	
@@ -62,14 +80,14 @@ public class UserControllerTest {
         .conpassword("unit")
         .role("User")
         .build();
-		this.mockMvc.perform(post("/adduser").flashAttr("user", user))
+		this.mockMvc.perform(post("/adduser").flashAttr("user", user).session(mockHttpSession))
 		.andExpect(status().is(302))
 		.andExpect(redirectedUrl("/setupadduseragain"));	
 	}
 
     @Test
 	public void testSetupUserSearch() throws Exception {
-		this.mockMvc.perform(get("/setupusersearch"))
+		this.mockMvc.perform(get("/setupusersearch").session(mockHttpSession))
 		.andExpect(status().isOk())
 		.andExpect(view().name("USR003"))
 		.andExpect(model().attributeExists("searchInfo"));
@@ -77,7 +95,7 @@ public class UserControllerTest {
 
     @Test
     public void testUserSearch() throws Exception{
-        this.mockMvc.perform(post("/usersearch").param("userid", "USR005").param("username", "Stella"))
+        this.mockMvc.perform(post("/usersearch").param("userid", "USR005").param("username", "Stella").session(mockHttpSession))
 		.andExpect(status().isOk())
 		.andExpect(view().name("USR003"))
 		.andExpect(model().attributeExists("searchInfo"));
@@ -94,14 +112,14 @@ public class UserControllerTest {
     	.role("User")
    		.build();
     	
-        this.mockMvc.perform(get("/setupUpdateUser").param("id", "USR005").flashAttr("user", user))
+        this.mockMvc.perform(get("/setupUpdateUser").param("id", "USR005").flashAttr("user", user).session(mockHttpSession))
 		.andExpect(status().isOk())
 		.andExpect(view().name("USR002"));   
     }
 
 	@Test
 	public void testUpdateUserValidate() throws Exception {
-		this.mockMvc.perform(post("/updateuser"))
+		this.mockMvc.perform(post("/updateuser").session(mockHttpSession))
 		.andExpect(status().isOk())
 		.andExpect(view().name("USR002"))
 		.andExpect(model().attributeExists("error"));
@@ -117,7 +135,7 @@ public class UserControllerTest {
         .conpassword("ss")
         .role("User")
         .build();
-		this.mockMvc.perform(post("/updateuser").flashAttr("user", user))
+		this.mockMvc.perform(post("/updateuser").flashAttr("user", user).session(mockHttpSession))
 		.andExpect(status().is(302))
 		.andExpect(redirectedUrl("/setupusersearch"));
 	}
@@ -133,7 +151,7 @@ public class UserControllerTest {
         .role("User")
         .build();
 		Mockito.when(userRepository.existsByEmail(user.getEmail())).thenReturn(true);
-		this.mockMvc.perform(post("/adduser").flashAttr("user", user))
+		this.mockMvc.perform(post("/adduser").flashAttr("user", user).session(mockHttpSession))
 		.andExpect(model().attributeExists("email"))
 		.andExpect(status().isOk())
 		.andExpect(view().name("USR001"));
@@ -160,7 +178,7 @@ public class UserControllerTest {
         .build();
 		Mockito.when(userRepository.existsByEmail(user.getEmail())).thenReturn(true);
 		Mockito.when(userRepository.findByUserid(user.getUserid())).thenReturn(user1);
-		this.mockMvc.perform(post("/updateuser").flashAttr("user", user))
+		this.mockMvc.perform(post("/updateuser").flashAttr("user", user).session(mockHttpSession))
 		.andExpect(model().attributeExists("error"))
 		.andExpect(status().isOk())
 		.andExpect(view().name("USR002"));
@@ -176,7 +194,7 @@ public class UserControllerTest {
         .conpassword("s")
         .role("User")
         .build();
-		this.mockMvc.perform(post("/adduser").flashAttr("user", user))
+		this.mockMvc.perform(post("/adduser").flashAttr("user", user).session(mockHttpSession))
 		.andExpect(status().isOk())
 		.andExpect(view().name("USR001"))
 		.andExpect(model().attributeExists("password"));
@@ -192,7 +210,7 @@ public class UserControllerTest {
         .conpassword("s")
         .role("User")
         .build();
-		this.mockMvc.perform(post("/updateuser").flashAttr("user", user))
+		this.mockMvc.perform(post("/updateuser").flashAttr("user", user).session(mockHttpSession))
 		.andExpect(status().isOk())
 		.andExpect(view().name("USR002"))
 		.andExpect(model().attributeExists("password"));
@@ -200,7 +218,7 @@ public class UserControllerTest {
 
     @Test
 		public void testDeleteUser() throws Exception {
-			this.mockMvc.perform(get("/deleteuser").param("id","USR001"))
+			this.mockMvc.perform(get("/deleteuser").param("id","USR001").session(mockHttpSession))
 			.andExpect(status().is(302))
 			.andExpect(redirectedUrl("/setupusersearch"));	
 		}
@@ -218,7 +236,7 @@ public class UserControllerTest {
 		List<User> userList = new ArrayList<>();
 		userList.add(user);
 		Mockito.when(userRepository.findAll()).thenReturn(userList);
-		this.mockMvc.perform(post("/adduser").flashAttr("user", user))
+		this.mockMvc.perform(post("/adduser").flashAttr("user", user).session(mockHttpSession))
 		.andExpect(status().is(302))
 		.andExpect(redirectedUrl("/setupadduseragain"));	
 	}
