@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.*;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -161,6 +162,39 @@ public class StudentControllerTest {
 		 .andExpect(status().is(302))
 		 .andExpect(redirectedUrl("/setupstudentsearch"));	
 		}
+
+    @Test
+    public void testAutoGenerateIdAgain() throws Exception {
+        Course course1 = Course.builder()
+        .classid("COU023")
+        .classname("IT")
+        .build();
+
+        Course course2 = Course.builder()
+        .classid("COU021")
+        .classname("Engineering")
+        .build();
+
+        ArrayList<Course> list = new ArrayList<Course>();
+        list.add(course1);
+        list.add(course2);
+
+        Student student = Student.builder()
+        .studentid("STU017")
+        .studentname("Mg Mg")
+        .dob("2/23/2004")
+        .gender("Male")
+        .phone("123456789")
+        .education("Diploma in IT")
+        .attendCourses(list)
+        .build();
+        List<Student> studentList = new ArrayList<>();
+        studentList.add(student);
+        Mockito.when(studentRepository.findAll()).thenReturn(studentList);
+        this.mockMvc.perform(post("/addstudent").flashAttr("sbean", student))
+        .andExpect(status().is(302))
+		 .andExpect(redirectedUrl("/setupaddstudentagain"));	
+        }
 }
 
 // Course course1 = Course.builder()

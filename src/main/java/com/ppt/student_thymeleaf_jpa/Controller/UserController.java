@@ -91,8 +91,8 @@ public class UserController {
 	public String updateuser(@ModelAttribute("user") @Validated User user,BindingResult bs, ModelMap model) {
 		
 		User userId = userRepository.findByUserid(user.getUserid());
-		String userEmail = userId.getEmail();
-		String uemail = user.getEmail();
+		// String userEmail = userId.getEmail();
+		// String uemail = user.getEmail();
 		if(bs.hasErrors()) {
 			model.addAttribute("error", "You must fullfill the fields.");
 			return "USR002";
@@ -100,7 +100,7 @@ public class UserController {
 		if(!user.getPassword().equals(user.getConpassword())) {
 			model.addAttribute("password", "Passwords do not match!!");
 			return "USR002";
-		}else if(userRepository.existsByEmail(user.getEmail()) && !userEmail.equals(uemail)){
+		}else if(userRepository.existsByEmail(user.getEmail()) && !userId.getEmail().equals(user.getEmail())){
 			model.addAttribute("error", "Email already exists!!");
 			return "USR002";
 		}
